@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tratar Fotos com Metadados</title>
+    <!-- Adicionando Bootstrap para estilização -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+
+
+</head>
+<body class="container mt-5">
+
+    <h2>Extrair metadados (data/hora e GPS) e tratar fotos:</h2>
+    <form action="/" method="post" enctype="multipart/form-data" class="mb-3">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+            <label for="file">Selecione as imagens:</label>
+            <input type="file" name="file" multiple class="form-control">
+        </div>
+          <h5>Configuração da fonte:</h5>
+        <div class="row">
+            <div class="col-md-2 form-group">
+                <label for="font_size">Tamanho da Fonte:</label>
+                <select name="font_size" class="form-control">
+                    <option value="24">24</option>
+                    <option value="12">12</option>
+                    <option value="14">14</option>
+                    <option value="16">16</option>
+                    <option value="18">18</option>
+                    <option value="22">22</option>
+                    <option value="28">28</option>
+                    <option value="32">32</option>
+                    <option value="48">48</option>
+                 </select>
+            </div>
+            <div class="col-md-2 form-group">
+                 <label for="font_color">Cor da Fonte:</label>
+                <input type="color" name="font_color" value="#000000" class="form-control"> <!-- O valor padrão é preto -->
+            </div>
+        </div>
+        <input type="submit" value="Processar" class="btn btn-primary">
+
+        <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+            <span class="sr-only">Carregando...</span>
+        </div>
+
+    </form>
+
+    {% if zip_filename %}
+        <h3>Download das imagens processadas:</h3>
+        <a href="{{ url_for('download') }}" class="btn btn-success">Baixar imagens processadas</a>
+    {% endif %}
+
+    {% if arquivos_sem_metadados %}
+    <h3>Atenção:</h3>
+    <p>As seguintes imagens não possuem metadados e, portanto, não foram processadas:</p>
+    <ul>
+        {% for arquivo in arquivos_sem_metadados %}
+            <li>{{ arquivo }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+    <script>
+    document.querySelector("form").addEventListener("submit", function() {
+        document.getElementById("loadingSpinner").style.display = "block";
+    });
+    </script>
+
+</body>
+<footer class="footer">
+    <p>Versão 1.5 - Desenvolvido por Diogo Batista</p>
+    <p>Contato: diogo@dtbintelligence.com.br</p>
+</footer>
+
+</html>

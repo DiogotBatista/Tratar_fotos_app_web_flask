@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/* Defina uma classe para o rodapé */
+.footer {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Estilo para o rodapé */
+.footer p {
+    margin-bottom: 1px; /* Ajuste o valor conforme necessário */
+}
